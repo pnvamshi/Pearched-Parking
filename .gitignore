@@ -1,0 +1,13 @@
+## Folders Not To Be Tracked ##
+target/
+.settings/
+log/
+work/
+
+## Files Not To Be Tracked ##
+
+## File with Extentions Not To Be tracked ##
+*.project
+*.class
+*.classpath
+*.orig
