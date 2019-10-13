@@ -26,6 +26,8 @@ public class ParkedVehicleInfo {
 	private Date entryTime;
 	
 	private Date exitTime;
+	
+	private String parkingStatus;
 
 	public String getId() {
 		return id;
@@ -73,5 +75,13 @@ public class ParkedVehicleInfo {
 
 	public void setExitTime(Date exitTime) {
 		this.exitTime = exitTime;
+	}
+
+	public String getParkingStatus() {
+		return parkingStatus;
+	}
+
+	public void setParkingStatus(String parkingStatus) {
+		this.parkingStatus = parkingStatus;
 	}
 }

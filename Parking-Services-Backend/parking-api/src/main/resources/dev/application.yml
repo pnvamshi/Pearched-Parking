@@ -1,2 +1,10 @@
 server:
    port: 8091
+   
+swagger:
+   enabled: true
+   title: 'Parking API Services'
+   description: 'API for Parking services'
+   version: 2.0.7
+   security:
+      enabled: false

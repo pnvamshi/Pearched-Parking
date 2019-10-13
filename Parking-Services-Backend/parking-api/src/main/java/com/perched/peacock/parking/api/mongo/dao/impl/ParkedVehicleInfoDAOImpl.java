@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.perched.peacock.parking.api.mongo.dao.ParkedVehicleInfoDAO;
+import com.perched.peacock.parking.api.mongo.model.ParkedVehicleInfo;
 
 /**
  * 
@@ -17,4 +18,9 @@ public class ParkedVehicleInfoDAOImpl implements ParkedVehicleInfoDAO {
 
 	@Autowired
 	MongoTemplate mongoTemplate;
+
+	@Override
+	public boolean saveParkedVehicleInfo(ParkedVehicleInfo parkedVehicleInfo) {
+		return mongoTemplate.save(parkedVehicleInfo) != null;
+	}
 }

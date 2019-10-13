@@ -1,5 +1,7 @@
 package com.perched.peacock.parking.api.mongo.dao;
 
+import com.perched.peacock.parking.api.mongo.model.ParkedVehicleInfo;
+
 /**
  * 
  * @author pnvamshi
@@ -7,5 +9,7 @@ package com.perched.peacock.parking.api.mongo.dao;
  */
 
 public interface ParkedVehicleInfoDAO {
+
+	boolean saveParkedVehicleInfo(ParkedVehicleInfo parkedVehicleInfo);
 
 }
