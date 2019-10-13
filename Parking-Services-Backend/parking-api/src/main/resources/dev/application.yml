@@ -1,6 +1,15 @@
 server:
    port: 8091
    
+spring:
+   data:
+      mongodb:
+         host: localhost
+         port: 27017
+         username: root
+         database: admin
+         password: example
+
 swagger:
    enabled: true
    title: 'Parking API Services'
