@@ -1,9 +1,14 @@
 package com.perched.peacock.parking.api.mongo.dao.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
+import com.perched.peacock.parking.api.exception.VehicleAlreadyPresentException;
 import com.perched.peacock.parking.api.mongo.dao.ParkedVehicleInfoDAO;
 import com.perched.peacock.parking.api.mongo.model.ParkedVehicleInfo;
 
@@ -21,6 +26,32 @@ public class ParkedVehicleInfoDAOImpl implements ParkedVehicleInfoDAO {
 
 	@Override
 	public boolean saveParkedVehicleInfo(ParkedVehicleInfo parkedVehicleInfo) {
+		Query query = new Query();
+		String vehicleNumber = StringUtils.isEmpty(parkedVehicleInfo.getVehicleNumber()) ? "" : parkedVehicleInfo.getVehicleNumber().replaceAll("\\s+", "");
+		query.addCriteria(Criteria.where("vehicleNumber").is(vehicleNumber));
+		if(mongoTemplate.exists(query, ParkedVehicleInfo.class)) {
+			throw new VehicleAlreadyPresentException("Vehicle with number + " + vehicleNumber + " already present in parking lot");
+		}
+		parkedVehicleInfo.setVehicleNumber(vehicleNumber);
+		parkedVehicleInfo.setParkingStatus("parked");
 		return mongoTemplate.save(parkedVehicleInfo) != null;
+	}
+	
+	@Override
+	public ParkedVehicleInfo getParkedVehicleInfo(String vehicleNumber) {
+		String saneVehicleNumber = StringUtils.isEmpty(vehicleNumber) ? "" : vehicleNumber.replaceAll("\\s+", ""); 
+		Query query = new Query();
+		query.addCriteria(Criteria.where("vehicleNumber").is(saneVehicleNumber));
+		return mongoTemplate.findOne(query, ParkedVehicleInfo.class);
+	}
+	
+	public void exitParking(ParkedVehicleInfo parkedVehicleInfo) {
+		Update update = new Update();
+		update.set("entryTime", parkedVehicleInfo.getEntryTime());
+		update.set("exitTime", parkedVehicleInfo.getExitTime());
+		update.set("parkingLotId", parkedVehicleInfo.getParkingLotId());
+		update.set("parkingStatus", parkedVehicleInfo.getParkingStatus());
+		update.set("vehicleNumber", parkedVehicleInfo.getVehicleNumber());
+		update.set("vehicleWeight", parkedVehicleInfo.getVehicleWeight());
 	}
 }

@@ -12,4 +12,6 @@ public interface ParkedVehicleInfoDAO {
 
 	boolean saveParkedVehicleInfo(ParkedVehicleInfo parkedVehicleInfo);
 
+	ParkedVehicleInfo getParkedVehicleInfo(String vehicleNumber);
+
 }

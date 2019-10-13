@@ -1,10 +1,9 @@
 package com.perched.peacock.parking.api.web.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import javax.validation.Valid;
-
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.perched.peacock.parking.api.mongo.model.ParkedVehicleInfo;
 import com.perched.peacock.parking.api.mongo.service.ParkedVehicleInfoService;
+import com.perched.peacock.parking.api.request.IncomingVehicleInfoRequest;
+import com.perched.peacock.parking.api.utils.TransformObjectUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,7 +40,7 @@ public class ParkingServicesOperatorApiController {
 	ParkedVehicleInfoService parkedVehicleInfoService;
 	
 	@ApiOperation(value = "Save Vehicle info", notes = "Return true if save successful")
-	@RequestMapping(value = "", method = {POST}, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "save/vehicle/info", method = {POST}, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = String.class),
 			@ApiResponse(code = 401, message = "Unauthorized", response = String.class),
@@ -47,13 +48,34 @@ public class ParkingServicesOperatorApiController {
 			@ApiResponse(code = 404, message = "Not Found", response = String.class),
 			@ApiResponse(code = 500, message = "Failure", response = String.class)
 	})
-	public boolean saveParkedVehicleInfo(@Valid @RequestBody @ApiParam(value = "value", required = true) ParkedVehicleInfo parkedVehicleInfo) {
-		LOGGER.info("Saving record for request : {}", parkedVehicleInfo);
+	public boolean saveParkedVehicleInfo(@Valid @RequestBody @ApiParam(value = "value", required = true) IncomingVehicleInfoRequest vehicleInfo) {
+		LOGGER.info("Saving record for request : {}", vehicleInfo);
 		boolean response = false;
 		try {
-			response = parkedVehicleInfoService.saveParkedVehicleInfo(parkedVehicleInfo);
+			response = parkedVehicleInfoService.saveParkedVehicleInfo(TransformObjectUtil.tranformObject(vehicleInfo));
 		}catch(Exception e){
-			LOGGER.error("Exception occured while processing request : {} as {}", parkedVehicleInfo,e);
+			LOGGER.error("Exception occured while processing request : {} as {}", vehicleInfo, e);
+		}
+		
+		return response;
+	}
+	
+	@ApiOperation(value = "Get Vehicle info", notes = "Get Vehicle Info using Vehicle Number")
+	@RequestMapping(value = "get/vehicle/info", method = {POST}, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Success", response = String.class),
+			@ApiResponse(code = 401, message = "Unauthorized", response = String.class),
+			@ApiResponse(code = 403, message = "Forbidden", response = String.class),
+			@ApiResponse(code = 404, message = "Not Found", response = String.class),
+			@ApiResponse(code = 500, message = "Failure", response = String.class)
+	})
+	public ParkedVehicleInfo getParkedVehicleInfo(@Valid @RequestBody @ApiParam(value = "value", required = true) String vehicleNumber) {
+		LOGGER.info("Saving record for request : {}", vehicleNumber);
+		ParkedVehicleInfo response = null;
+		try {
+			response = parkedVehicleInfoService.getParkedVehicleInfo(vehicleNumber);
+		}catch(Exception e){
+			LOGGER.error("Exception occured while processing request : {} as {}", vehicleNumber, e);
 		}
 		
 		return response;

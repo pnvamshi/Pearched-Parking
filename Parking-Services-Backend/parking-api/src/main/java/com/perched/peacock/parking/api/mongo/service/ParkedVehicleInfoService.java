@@ -17,4 +17,18 @@ public interface ParkedVehicleInfoService {
 	 */
 	boolean saveParkedVehicleInfo(ParkedVehicleInfo parkedVehicleInfo);
 
+	/**
+	 * 
+	 * @param vehicleNumber
+	 * @return
+	 */
+	ParkedVehicleInfo getParkedVehicleInfo(String vehicleNumber);
+
+	/**
+	 * 
+	 * @param vehicleNumber
+	 * @return
+	 */
+	Double generateParkingBill(String vehicleNumber);
+
 }

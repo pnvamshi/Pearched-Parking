@@ -19,7 +19,7 @@ public class ParkedVehicleInfo {
 	
 	private String vehicleNumber;
 	
-	private String vehicleWeight;
+	private Double vehicleWeight;
 	
 	private String parkingLotId;
 	
@@ -28,6 +28,8 @@ public class ParkedVehicleInfo {
 	private Date exitTime;
 	
 	private String parkingStatus;
+	
+	private Double parkingFee;
 
 	public String getId() {
 		return id;
@@ -45,11 +47,11 @@ public class ParkedVehicleInfo {
 		this.vehicleNumber = vehicleNumber;
 	}
 
-	public String getVehicleWeight() {
+	public Double getVehicleWeight() {
 		return vehicleWeight;
 	}
 
-	public void setVehicleWeight(String vehicleWeight) {
+	public void setVehicleWeight(Double vehicleWeight) {
 		this.vehicleWeight = vehicleWeight;
 	}
 
@@ -83,5 +85,13 @@ public class ParkedVehicleInfo {
 
 	public void setParkingStatus(String parkingStatus) {
 		this.parkingStatus = parkingStatus;
+	}
+
+	public Double getParkingFee() {
+		return parkingFee;
+	}
+
+	public void setParkingFee(Double parkingFee) {
+		this.parkingFee = parkingFee;
 	}
 }
