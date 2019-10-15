@@ -43,11 +43,10 @@ public class ParkingServicesOperatorApiController {
 	@RequestMapping(value = "save/vehicle/info", method = {POST}, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = String.class),
-			@ApiResponse(code = 401, message = "Unauthorized", response = String.class),
-			@ApiResponse(code = 403, message = "Forbidden", response = String.class),
-			@ApiResponse(code = 404, message = "Not Found", response = String.class),
-			@ApiResponse(code = 500, message = "Failure", response = String.class)
-	})
+			@ApiResponse(code = 401, message = "Unauthorized"),
+			@ApiResponse(code = 403, message = "Forbidden"),
+			@ApiResponse(code = 404, message = "Not Found"),
+			@ApiResponse(code = 500, message = "Failure") })
 	public boolean saveParkedVehicleInfo(@Valid @RequestBody @ApiParam(value = "value", required = true) IncomingVehicleInfoRequest vehicleInfo) {
 		LOGGER.info("Saving record for request : {}", vehicleInfo);
 		boolean response = false;
@@ -64,16 +63,37 @@ public class ParkingServicesOperatorApiController {
 	@RequestMapping(value = "get/vehicle/info", method = {POST}, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = String.class),
-			@ApiResponse(code = 401, message = "Unauthorized", response = String.class),
-			@ApiResponse(code = 403, message = "Forbidden", response = String.class),
-			@ApiResponse(code = 404, message = "Not Found", response = String.class),
-			@ApiResponse(code = 500, message = "Failure", response = String.class)
+			@ApiResponse(code = 401, message = "Unauthorized"),
+			@ApiResponse(code = 403, message = "Forbidden"),
+			@ApiResponse(code = 404, message = "Not Found"),
+			@ApiResponse(code = 500, message = "Failure")
 	})
 	public ParkedVehicleInfo getParkedVehicleInfo(@Valid @RequestBody @ApiParam(value = "value", required = true) String vehicleNumber) {
 		LOGGER.info("Saving record for request : {}", vehicleNumber);
 		ParkedVehicleInfo response = null;
 		try {
 			response = parkedVehicleInfoService.getParkedVehicleInfo(vehicleNumber);
+		}catch(Exception e){
+			LOGGER.error("Exception occured while processing request : {} as {}", vehicleNumber, e);
+		}
+		
+		return response;
+	}
+	
+	@ApiOperation(value = "Generate Vehicle Parking Bill", notes = "Generate Vehicle Parking Bill")
+	@RequestMapping(value = "generate/parking/bill", method = {POST}, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Success", response = String.class),
+			@ApiResponse(code = 401, message = "Unauthorized"),
+			@ApiResponse(code = 403, message = "Forbidden"),
+			@ApiResponse(code = 404, message = "Not Found"),
+			@ApiResponse(code = 500, message = "Failure")
+	})
+	public Long generateParkingBill(@Valid @RequestBody @ApiParam(value = "value", required = true) String vehicleNumber) {
+		LOGGER.info("Saving record for request : {}", vehicleNumber);
+		Long response = null;
+		try {
+			response = (long) Math.floor(parkedVehicleInfoService.generateParkingBill(vehicleNumber));
 		}catch(Exception e){
 			LOGGER.error("Exception occured while processing request : {} as {}", vehicleNumber, e);
 		}

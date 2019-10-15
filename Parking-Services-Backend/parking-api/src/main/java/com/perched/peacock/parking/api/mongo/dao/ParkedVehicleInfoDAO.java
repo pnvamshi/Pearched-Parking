@@ -10,8 +10,26 @@ import com.perched.peacock.parking.api.mongo.model.ParkedVehicleInfo;
 
 public interface ParkedVehicleInfoDAO {
 
+	/**
+	 * 
+	 * @param parkedVehicleInfo
+	 * @return
+	 */
 	boolean saveParkedVehicleInfo(ParkedVehicleInfo parkedVehicleInfo);
 
+	/**
+	 * 
+	 * @param vehicleNumber
+	 * @return
+	 */
 	ParkedVehicleInfo getParkedVehicleInfo(String vehicleNumber);
+
+	/**
+	 * 
+	 * @param vehicleNumber
+	 * @param parkingFee
+	 * @return
+	 */
+	boolean exitParking(String vehicleNumber, Double parkingFee);
 
 }

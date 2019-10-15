@@ -7,11 +7,13 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.perched.peacock.parking.api.mongo.model.ParkedVehicleInfo;
+import com.perched.peacock.parking.api.mongo.service.ParkedVehicleInfoService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,6 +33,9 @@ import io.swagger.annotations.ApiResponses;
 public class ParkingServicesUserApiController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ParkingServicesUserApiController.class);
+	
+	@Autowired
+	ParkedVehicleInfoService parkedVehicleInfoService;
 	
 	@ApiOperation(value = "Save Vehicle info", notes = "Return true if save successful")
 	@RequestMapping(value = "", method = {POST}, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)

@@ -1,5 +1,7 @@
 package com.perched.peacock.parking.api.mongo.dao.impl;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -8,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
+import com.perched.peacock.parking.api.constants.SharedConstants;
 import com.perched.peacock.parking.api.exception.VehicleAlreadyPresentException;
 import com.perched.peacock.parking.api.mongo.dao.ParkedVehicleInfoDAO;
 import com.perched.peacock.parking.api.mongo.model.ParkedVehicleInfo;
@@ -33,7 +36,7 @@ public class ParkedVehicleInfoDAOImpl implements ParkedVehicleInfoDAO {
 			throw new VehicleAlreadyPresentException("Vehicle with number + " + vehicleNumber + " already present in parking lot");
 		}
 		parkedVehicleInfo.setVehicleNumber(vehicleNumber);
-		parkedVehicleInfo.setParkingStatus("parked");
+		parkedVehicleInfo.setParkingStatus(SharedConstants.VEHICLE_STATUS_PARKED);
 		return mongoTemplate.save(parkedVehicleInfo) != null;
 	}
 	
@@ -45,13 +48,15 @@ public class ParkedVehicleInfoDAOImpl implements ParkedVehicleInfoDAO {
 		return mongoTemplate.findOne(query, ParkedVehicleInfo.class);
 	}
 	
-	public void exitParking(ParkedVehicleInfo parkedVehicleInfo) {
+	@Override
+	public boolean exitParking(String vehicleNumber, Double parkingFee) {
+		String formattedVehicleNumber = StringUtils.isEmpty(vehicleNumber) ? "" : vehicleNumber.replaceAll("\\s+", "");
+		Query query = new Query();
+		query.addCriteria(Criteria.where("vehicleNumber").is(formattedVehicleNumber));
 		Update update = new Update();
-		update.set("entryTime", parkedVehicleInfo.getEntryTime());
-		update.set("exitTime", parkedVehicleInfo.getExitTime());
-		update.set("parkingLotId", parkedVehicleInfo.getParkingLotId());
-		update.set("parkingStatus", parkedVehicleInfo.getParkingStatus());
-		update.set("vehicleNumber", parkedVehicleInfo.getVehicleNumber());
-		update.set("vehicleWeight", parkedVehicleInfo.getVehicleWeight());
+		update.set("exitTime", new Date());
+		update.set("parkingFee", parkingFee);
+		update.set("parkingStatus", SharedConstants.VEHICLE_STATUS_EXITED);
+		return mongoTemplate.findAndModify(query, update, ParkedVehicleInfo.class)!=null;
 	}
 }
