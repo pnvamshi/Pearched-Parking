@@ -9,7 +9,7 @@ import com.perched.peacock.parking.api.request.IncomingVehicleInfoRequest;
  *
  */
 
-public class TransformObjectUtil {
+public class ObjectUtil {
 
 	public static ParkedVehicleInfo tranformObject(IncomingVehicleInfoRequest incomingVehicleInfoRequest) {
 		ParkedVehicleInfo parkedVehicleInfo = new ParkedVehicleInfo();

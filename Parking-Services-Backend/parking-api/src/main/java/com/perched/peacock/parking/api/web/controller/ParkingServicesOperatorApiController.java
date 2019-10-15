@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.perched.peacock.parking.api.mongo.model.ParkedVehicleInfo;
 import com.perched.peacock.parking.api.mongo.service.ParkedVehicleInfoService;
 import com.perched.peacock.parking.api.request.IncomingVehicleInfoRequest;
-import com.perched.peacock.parking.api.utils.TransformObjectUtil;
+import com.perched.peacock.parking.api.utils.ObjectUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -52,7 +52,7 @@ public class ParkingServicesOperatorApiController {
 		LOGGER.info("Saving record for request : {}", vehicleInfo);
 		boolean response = false;
 		try {
-			response = parkedVehicleInfoService.saveParkedVehicleInfo(TransformObjectUtil.tranformObject(vehicleInfo));
+			response = parkedVehicleInfoService.saveParkedVehicleInfo(ObjectUtil.tranformObject(vehicleInfo));
 		}catch(Exception e){
 			LOGGER.error("Exception occured while processing request : {} as {}", vehicleInfo, e);
 		}
