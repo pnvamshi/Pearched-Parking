@@ -52,7 +52,7 @@ public class ParkedVehicleInfoDAOImpl implements ParkedVehicleInfoDAO {
 	public boolean exitParking(String vehicleNumber, Double parkingFee) {
 		String formattedVehicleNumber = StringUtils.isEmpty(vehicleNumber) ? "" : vehicleNumber.replaceAll("\\s+", "");
 		Query query = new Query();
-		query.addCriteria(Criteria.where("vehicleNumber").is(formattedVehicleNumber));
+		query.addCriteria(Criteria.where("vehicleNumber").is(formattedVehicleNumber).and("parkingStatus").is(SharedConstants.VEHICLE_STATUS_PARKED));
 		Update update = new Update();
 		update.set("exitTime", new Date());
 		update.set("parkingFee", parkingFee);

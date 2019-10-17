@@ -1,6 +1,7 @@
 package com.perched.peacock.parking.api.mongo.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.perched.peacock.parking.api.encryption.service.EncryptionService;
 import com.perched.peacock.parking.api.exception.UserDoesNotExistException;
@@ -14,6 +15,7 @@ import com.perched.peacock.parking.api.mongo.service.UserProfileInfoService;
  *
  */
 
+@Service
 public class UserProfileInfoServiceImpl implements UserProfileInfoService{
 
 	@Autowired
