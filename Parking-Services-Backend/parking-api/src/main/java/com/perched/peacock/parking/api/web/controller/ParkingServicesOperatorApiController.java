@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,8 +48,9 @@ public class ParkingServicesOperatorApiController {
 			@ApiResponse(code = 403, message = "Forbidden"),
 			@ApiResponse(code = 404, message = "Not Found"),
 			@ApiResponse(code = 500, message = "Failure") })
-	public boolean saveParkedVehicleInfo(@Valid @RequestBody @ApiParam(value = "value", required = true) IncomingVehicleInfoRequest vehicleInfo) {
+	public boolean saveParkedVehicleInfo(@Valid @RequestBody @ApiParam(value = "value", required = true) IncomingVehicleInfoRequest vehicleInfo, @RequestHeader("Authorization") String authHeader) {
 		LOGGER.info("Saving record for request : {}", vehicleInfo);
+		System.out.println(authHeader);
 		boolean response = false;
 		try {
 			response = parkedVehicleInfoService.saveParkedVehicleInfo(ObjectUtil.tranformObject(vehicleInfo));

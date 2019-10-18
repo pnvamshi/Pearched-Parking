@@ -20,9 +20,8 @@ public interface UserProfileInfoService {
 	/**
 	 * 
 	 * @param userName
-	 * @param password
 	 * @return
 	 */
-	boolean verifyUser(String userName, String password);
+	UserProfileInfo getUserProfileInfo(String userName);
 
 }

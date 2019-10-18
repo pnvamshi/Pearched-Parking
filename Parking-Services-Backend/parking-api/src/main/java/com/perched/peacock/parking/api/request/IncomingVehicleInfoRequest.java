@@ -1,7 +1,5 @@
 package com.perched.peacock.parking.api.request;
 
-import java.util.Date;
-
 /**
  * 
  * @author pnvamshi
@@ -16,7 +14,6 @@ public class IncomingVehicleInfoRequest {
 	
 	private String parkingLotId;
 	
-	private Date entryTime;
 
 	public String getVehicleNumber() {
 		return vehicleNumber;
@@ -40,13 +37,5 @@ public class IncomingVehicleInfoRequest {
 
 	public void setParkingLotId(String parkingLotId) {
 		this.parkingLotId = parkingLotId;
-	}
-
-	public Date getEntryTime() {
-		return entryTime;
-	}
-
-	public void setEntryTime(Date entryTime) {
-		this.entryTime = entryTime;
 	}
 }
