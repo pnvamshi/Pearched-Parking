@@ -1,5 +1,7 @@
 package com.perched.peacock.parking.api.mongo.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,4 +30,20 @@ public class UserProfileInfoServiceImpl implements UserProfileInfoService{
 	public UserProfileInfo getUserProfileInfo(String userName) {
 		return userProfileInfoDAO.getUserProfileInfo(userName);
 	}
+
+	@Override
+	public boolean updateUserProfileInfo(UserProfileInfo userProfileInfo) {
+		return userProfileInfoDAO.updateUserProfileInfo(userProfileInfo);
+	}
+
+	@Override
+	public boolean updateUserProfilePassword(String userName, String password) {
+		return userProfileInfoDAO.updateUserProfilePassword(userName, password);
+	}
+	
+	@Override
+	public List<String> getUserNames(String role){
+		return userProfileInfoDAO.getUserNames(role);
+	}
+	
 }
