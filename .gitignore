@@ -3,6 +3,7 @@ target/
 .settings/
 log/
 work/
+bin/
 
 ## Files Not To Be Tracked ##
 

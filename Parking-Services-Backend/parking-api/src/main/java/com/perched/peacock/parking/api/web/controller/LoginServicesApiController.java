@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.perched.peacock.parking.api.dto.LoginDetails;
+import com.perched.peacock.parking.api.exception.TechnicalException;
 import com.perched.peacock.parking.api.request.LoginRequest;
 import com.perched.peacock.parking.api.token.service.TokenService;
 
@@ -45,12 +47,13 @@ public class LoginServicesApiController {
 			@ApiResponse(code = 403, message = "Forbidden"),
 			@ApiResponse(code = 404, message = "Not Found"),
 			@ApiResponse(code = 500, message = "Failure") })
-	public String generateToken(@Valid @RequestBody @ApiParam(value = "value", required = true)LoginRequest loginDetails) {
-		String response = "";
+	public LoginDetails generateToken(@Valid @RequestBody @ApiParam(value = "value", required = true)LoginRequest loginDetails) {
+		LoginDetails response = new LoginDetails();
 		try {
 			response = tokenService.generateToken(loginDetails.getUserName(), loginDetails.getPassword());
 		}catch(Exception e){
 			LOGGER.error("Exception occured while processing request : {} as {}", loginDetails.getUserName(), e);
+			throw new TechnicalException(e);
 		}
 		
 		return response;

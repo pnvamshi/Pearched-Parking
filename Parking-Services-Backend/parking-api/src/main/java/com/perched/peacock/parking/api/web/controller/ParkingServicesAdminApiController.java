@@ -9,11 +9,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.perched.peacock.parking.api.constants.SharedConstants;
+import com.perched.peacock.parking.api.exception.InsufficientRoleException;
+import com.perched.peacock.parking.api.exception.TechnicalException;
 import com.perched.peacock.parking.api.mongo.model.UserProfileInfo;
 import com.perched.peacock.parking.api.mongo.service.UserProfileInfoService;
+import com.perched.peacock.parking.api.token.service.TokenService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,7 +40,10 @@ public class ParkingServicesAdminApiController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ParkingServicesAdminApiController.class);
 	
 	@Autowired
-	UserProfileInfoService userProfileInfoService;
+	private UserProfileInfoService userProfileInfoService;
+	
+	@Autowired
+	private TokenService tokenService;
 	
 	
 	@ApiOperation(value = "Save User Profile info", notes = "Return true if save successful")
@@ -46,13 +54,17 @@ public class ParkingServicesAdminApiController {
 			@ApiResponse(code = 403, message = "Forbidden"),
 			@ApiResponse(code = 404, message = "Not Found"),
 			@ApiResponse(code = 500, message = "Failure") })
-	public boolean saveUserProfileInfo(@Valid @RequestBody @ApiParam(value = "value", required = true) UserProfileInfo userProfileInfo) {
+	public boolean saveUserProfileInfo(@Valid @RequestBody @ApiParam(value = "value", required = true) UserProfileInfo userProfileInfo,@RequestHeader("Authorization") String authHeader) {
 		LOGGER.info("Saving record for request : {}", userProfileInfo);
 		boolean response = false;
 		try {
+			if(!SharedConstants.ROLE_ADMIN.contains(tokenService.getRoleFromToken(authHeader))) {
+				throw new InsufficientRoleException("User does not have access");
+			}
 			response = userProfileInfoService.saveUserProfileInfo(userProfileInfo);
 		}catch(Exception e){
 			LOGGER.error("Exception occured while processing request : {} as {}", userProfileInfo.getUserName(), e);
+			throw new TechnicalException(e);
 		}
 		
 		return response;

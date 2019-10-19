@@ -13,9 +13,13 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.perched.peacock.parking.api.constants.SharedConstants;
+import com.perched.peacock.parking.api.exception.InsufficientRoleException;
+import com.perched.peacock.parking.api.exception.TechnicalException;
 import com.perched.peacock.parking.api.mongo.model.ParkedVehicleInfo;
 import com.perched.peacock.parking.api.mongo.service.ParkedVehicleInfoService;
 import com.perched.peacock.parking.api.request.IncomingVehicleInfoRequest;
+import com.perched.peacock.parking.api.token.service.TokenService;
 import com.perched.peacock.parking.api.utils.ObjectUtil;
 
 import io.swagger.annotations.Api;
@@ -40,6 +44,9 @@ public class ParkingServicesOperatorApiController {
 	@Autowired
 	ParkedVehicleInfoService parkedVehicleInfoService;
 	
+	@Autowired
+	private TokenService tokenService;
+	
 	@ApiOperation(value = "Save Vehicle info", notes = "Return true if save successful")
 	@RequestMapping(value = "save/vehicle/info", method = {POST}, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	@ApiResponses(value = {
@@ -53,9 +60,13 @@ public class ParkingServicesOperatorApiController {
 		System.out.println(authHeader);
 		boolean response = false;
 		try {
+			if(!(SharedConstants.ROLE_ADMIN+SharedConstants.ROLE_OPERATOR).contains(tokenService.getRoleFromToken(authHeader))) {
+				throw new InsufficientRoleException("User does not have access");
+			}
 			response = parkedVehicleInfoService.saveParkedVehicleInfo(ObjectUtil.tranformObject(vehicleInfo));
 		}catch(Exception e){
 			LOGGER.error("Exception occured while processing request : {} as {}", vehicleInfo, e);
+			throw new TechnicalException(e);
 		}
 		
 		return response;
@@ -70,13 +81,17 @@ public class ParkingServicesOperatorApiController {
 			@ApiResponse(code = 404, message = "Not Found"),
 			@ApiResponse(code = 500, message = "Failure")
 	})
-	public ParkedVehicleInfo getParkedVehicleInfo(@Valid @RequestBody @ApiParam(value = "value", required = true) String vehicleNumber) {
+	public ParkedVehicleInfo getParkedVehicleInfo(@Valid @RequestBody @ApiParam(value = "value", required = true) String vehicleNumber, @RequestHeader("Authorization") String authHeader) {
 		LOGGER.info("Saving record for request : {}", vehicleNumber);
 		ParkedVehicleInfo response = null;
 		try {
+			if(!(SharedConstants.ROLE_ADMIN+SharedConstants.ROLE_OPERATOR).contains(tokenService.getRoleFromToken(authHeader))) {
+				throw new InsufficientRoleException("User does not have access");
+			}
 			response = parkedVehicleInfoService.getParkedVehicleInfo(vehicleNumber);
 		}catch(Exception e){
 			LOGGER.error("Exception occured while processing request : {} as {}", vehicleNumber, e);
+			throw new TechnicalException(e);
 		}
 		
 		return response;
@@ -91,13 +106,17 @@ public class ParkingServicesOperatorApiController {
 			@ApiResponse(code = 404, message = "Not Found"),
 			@ApiResponse(code = 500, message = "Failure")
 	})
-	public Long generateParkingBill(@Valid @RequestBody @ApiParam(value = "value", required = true) String vehicleNumber) {
+	public Long generateParkingBill(@Valid @RequestBody @ApiParam(value = "value", required = true) String vehicleNumber, @RequestHeader("Authorization") String authHeader) {
 		LOGGER.info("Saving record for request : {}", vehicleNumber);
 		Long response = null;
 		try {
+			if(!(SharedConstants.ROLE_ADMIN+SharedConstants.ROLE_OPERATOR).contains(tokenService.getRoleFromToken(authHeader))) {
+				throw new InsufficientRoleException("User does not have access");
+			}
 			response = (long) Math.floor(parkedVehicleInfoService.generateParkingBill(vehicleNumber));
 		}catch(Exception e){
 			LOGGER.error("Exception occured while processing request : {} as {}", vehicleNumber, e);
+			throw new TechnicalException(e);
 		}
 		
 		return response;

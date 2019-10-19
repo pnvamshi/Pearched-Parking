@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.perched.peacock.parking.api.dto.LoginDetails;
 import com.perched.peacock.parking.api.encryption.service.EncryptionService;
 import com.perched.peacock.parking.api.exception.UserDoesNotExistException;
 import com.perched.peacock.parking.api.mongo.model.UserProfileInfo;
@@ -41,17 +42,20 @@ public class TokenServiceImpl implements TokenService {
 	private Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
 	@Override
-	public String generateToken(String userName, String password) {
+	public LoginDetails generateToken(String userName, String password) {
+		LoginDetails loginDetails = new LoginDetails();
 		UserProfileInfo userProfileInfo = userProfileInfoService.getUserProfileInfo(userName);
 		if(userProfileInfo == null) {
 			throw new UserDoesNotExistException("Username : " + userName + " does not exist, register first");
 		}
 		String hashedPassword = userProfileInfo.getPassword();
 		if(!encryptionService.comparePassword(password, hashedPassword)) {
-			return "";
+			return loginDetails;
 		}
 		String token = Jwts.builder().setSubject(userProfileInfo.getRole()).signWith(key).compact();
-		return token;
+		loginDetails.setRole(userProfileInfo.getRole());
+		loginDetails.setToken(token);
+		return loginDetails;
 	}
 	
 	@Override
@@ -64,17 +68,4 @@ public class TokenServiceImpl implements TokenService {
 		}
 		return "";
 	}
-	
-//	public String getAccessTokenFromRequest() {
-//		String accessToken = "";
-//		SecurityContext securityContext = SecurityContextHolder.getContext();
-//		if(securityContext != null) {
-//			Authentication authentication = securityContext.getAuthentication();
-//			if(authentication != null) {
-//				Object details = authentication.getDetails();
-//				
-//			}
-//		}
-//		return accessToken;
-//	}
 }
