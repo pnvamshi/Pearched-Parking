@@ -66,6 +66,6 @@ public class TokenServiceImpl implements TokenService {
 		} catch (JwtException e) {
 			LOGGER.error("Invalid token");
 		}
-		return "";
+		return "INVALID";
 	}
 }
