@@ -1,5 +1,7 @@
 package com.perched.peacock.parking.api.mongo.service;
 
+import java.util.List;
+
 import com.perched.peacock.parking.api.mongo.model.ParkedVehicleInfo;
 
 /**
@@ -30,5 +32,12 @@ public interface ParkedVehicleInfoService {
 	 * @return
 	 */
 	Double generateParkingBill(String vehicleNumber);
+
+	/**
+	 * 
+	 * @param parkingLotId
+	 * @return
+	 */
+	List<String> getParkedVehicles(String parkingLotId);
 
 }

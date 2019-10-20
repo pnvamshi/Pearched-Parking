@@ -1,5 +1,7 @@
 package com.perched.peacock.parking.api.mongo.dao;
 
+import java.util.List;
+
 import com.perched.peacock.parking.api.mongo.model.ParkedVehicleInfo;
 
 /**
@@ -31,5 +33,12 @@ public interface ParkedVehicleInfoDAO {
 	 * @return
 	 */
 	boolean exitParking(String vehicleNumber, Double parkingFee);
+
+	/**
+	 * 
+	 * @param parkingLotId
+	 * @return
+	 */
+	List<String> getParkedVehicles(String parkingLotId);
 
 }

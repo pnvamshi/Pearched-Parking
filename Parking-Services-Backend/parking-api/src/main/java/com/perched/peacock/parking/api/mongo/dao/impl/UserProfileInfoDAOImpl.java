@@ -73,7 +73,7 @@ public class UserProfileInfoDAOImpl implements UserProfileInfoDAO {
 	public List<String> getUserNames(String role) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("role").is(role));
-		return mongoTemplate.findDistinct("userName", UserProfileInfo.class, String.class);
+		return mongoTemplate.findDistinct(query,"userName", UserProfileInfo.class, String.class);
 	}
 	
 	@Override

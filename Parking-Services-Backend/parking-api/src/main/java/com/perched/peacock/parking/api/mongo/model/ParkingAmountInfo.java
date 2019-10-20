@@ -1,11 +1,14 @@
 package com.perched.peacock.parking.api.mongo.model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * 
  * @author pnvamshi
  *
  */
 
+@Document(collection = "PARKING_AMOUNT_INFO")
 public class ParkingAmountInfo {
 
 	private String parkingLotId;

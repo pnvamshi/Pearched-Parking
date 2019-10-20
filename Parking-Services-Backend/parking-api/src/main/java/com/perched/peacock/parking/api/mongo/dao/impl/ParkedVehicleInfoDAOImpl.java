@@ -1,6 +1,7 @@
 package com.perched.peacock.parking.api.mongo.dao.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,5 +59,12 @@ public class ParkedVehicleInfoDAOImpl implements ParkedVehicleInfoDAO {
 		update.set("parkingFee", parkingFee);
 		update.set("parkingStatus", SharedConstants.VEHICLE_STATUS_EXITED);
 		return mongoTemplate.findAndModify(query, update, ParkedVehicleInfo.class)!=null;
+	}
+	
+	@Override
+	public List<String> getParkedVehicles(String parkingLotId){
+		Query query = new Query();
+		query.addCriteria(Criteria.where("parkingLotId").is(parkingLotId));
+		return mongoTemplate.findDistinct(query, "vehicleNumber", ParkedVehicleInfo.class, String.class);
 	}
 }

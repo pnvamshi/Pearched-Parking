@@ -1,6 +1,7 @@
 package com.perched.peacock.parking.api.mongo.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,5 +63,10 @@ public class ParkedVehicleInfoServiceImpl implements ParkedVehicleInfoService {
 			throw new TechnicalException("Exception occured while generating bill for : " + vehicleNumber);
 		}
 		return parkingAmount;
+	}
+	
+	@Override
+	public List<String> getParkedVehicles(String parkingLotId){
+		return parkedVehicleInfoDAO.getParkedVehicles(parkingLotId);
 	}
 }

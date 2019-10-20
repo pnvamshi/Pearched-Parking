@@ -77,4 +77,13 @@ public class UserProfileInfoServiceImplTest {
 		userProfileInfoService.saveUserProfileInfo(userProfileInfo );
 	}
 	
+	@Test
+	public void saveUser7() {
+		UserProfileInfo userProfileInfo = new UserProfileInfo();
+		userProfileInfo.setUserName("krishna");
+		userProfileInfo.setPassword("hello7");
+		userProfileInfo.setRole(SharedConstants.ROLE_ADMIN);
+		userProfileInfoService.saveUserProfileInfo(userProfileInfo );
+	}
+	
 }
