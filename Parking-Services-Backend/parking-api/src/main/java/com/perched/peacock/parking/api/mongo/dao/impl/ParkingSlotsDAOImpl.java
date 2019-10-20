@@ -23,8 +23,11 @@ import com.perched.peacock.parking.api.mongo.model.ParkingSlots;
 public class ParkingSlotsDAOImpl implements ParkingSlotsDAO {
 
 	@Autowired
-	MongoTemplate mongoTemplate;
+	private MongoTemplate mongoTemplate;
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.dao.ParkingSlotsDAO#getParkingSlotsInfo
+	 */
 	@Override
 	public ParkingSlots getParkingSlotsInfo(String parkingLotId) {
 		Query query = new Query();
@@ -32,6 +35,9 @@ public class ParkingSlotsDAOImpl implements ParkingSlotsDAO {
 		return mongoTemplate.findOne(query, ParkingSlots.class);
 	}
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.dao.ParkingSlotsDAO#getParkingRegions
+	 */
 	@Override
 	public List<ParkingRegionInfo> getParkingRegions() {
 		List<ParkingSlots> parkingSlots = mongoTemplate.findAll(ParkingSlots.class);
@@ -45,11 +51,17 @@ public class ParkingSlotsDAOImpl implements ParkingSlotsDAO {
 		return parkingInfo;
 	}
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.dao.ParkingSlotsDAO#getParkingLotIds
+	 */
 	@Override
 	public List<String> getParkingLotIds() {
 		return mongoTemplate.findDistinct("pakingLotId", ParkingSlots.class, String.class);
 	}
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.dao.ParkingSlotsDAO#saveParkingSlots
+	 */
 	@Override
 	public boolean saveParkingSlots(ParkingSlots parkingSlots) {
 		return mongoTemplate.save(parkingSlots)!=null;

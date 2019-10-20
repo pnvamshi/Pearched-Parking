@@ -10,27 +10,45 @@ import com.perched.peacock.parking.api.mongo.dao.ParkingSlotsDAO;
 import com.perched.peacock.parking.api.mongo.model.ParkingSlots;
 import com.perched.peacock.parking.api.mongo.service.ParkingSlotsService;
 
+/**
+ * 
+ * @author pnvamshi
+ *
+ */
+
 @Service
 public class ParkingSlotsServiceImpl implements ParkingSlotsService {
 	
 	@Autowired
-	ParkingSlotsDAO parkingSlotsDAO;
+	private ParkingSlotsDAO parkingSlotsDAO;
 
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.service.ParkingSlotsService#getParkingSlotsInfo
+	 */
 	@Override
 	public ParkingSlots getParkingSlotsInfo(String parkingRegion) {
 		return parkingSlotsDAO.getParkingSlotsInfo(parkingRegion);
 	}
 
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.service.ParkingSlotsService#getParkingRegions
+	 */
 	@Override
 	public List<ParkingRegionInfo> getParkingRegions() {
 		return parkingSlotsDAO.getParkingRegions();
 	}
 
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.service.ParkingSlotsService#getParkingLotIds
+	 */
 	@Override
 	public List<String> getParkingLotIds() {
 		return parkingSlotsDAO.getParkingLotIds();
 	}
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.service.ParkingSlotsService#saveParkingSlots
+	 */
 	@Override
 	public boolean saveParkingSlots(ParkingSlots parkingSlots) {
 		return parkingSlotsDAO.saveParkingSlots(parkingSlots);

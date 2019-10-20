@@ -18,8 +18,11 @@ import com.perched.peacock.parking.api.mongo.service.ParkingAmountInfoService;
 public class ParkingAmountInfoServiceImpl implements ParkingAmountInfoService {
 
 	@Autowired
-	ParkingAmountInfoDAO parkingAmountInfoDAO;
+	private ParkingAmountInfoDAO parkingAmountInfoDAO;
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.service.ParkingAmountInfoService#getParkingCharge
+	 */
 	@Override
 	public long getParkingCharge(String parkingLotId) {
 		ParkingAmountInfo parkingAmountInfo = parkingAmountInfoDAO.getParkingAmountInfo(parkingLotId);
@@ -29,6 +32,9 @@ public class ParkingAmountInfoServiceImpl implements ParkingAmountInfoService {
 		return parkingAmountInfo.getParkingFee();
 	}
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.service.ParkingAmountInfoService#saveParkingAmountInfo
+	 */
 	@Override
 	public boolean saveParkingAmountInfo(ParkingAmountInfo parkingAmountInfo) {
 		return parkingAmountInfoDAO.saveParkingAmountInfo(parkingAmountInfo);

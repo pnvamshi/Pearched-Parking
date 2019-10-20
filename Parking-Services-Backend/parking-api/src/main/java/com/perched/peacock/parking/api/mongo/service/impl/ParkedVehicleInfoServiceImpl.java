@@ -25,14 +25,17 @@ import com.perched.peacock.parking.api.mongo.service.ParkingSlotsService;
 public class ParkedVehicleInfoServiceImpl implements ParkedVehicleInfoService {
 
 	@Autowired
-	ParkedVehicleInfoDAO parkedVehicleInfoDAO;
+	private ParkedVehicleInfoDAO parkedVehicleInfoDAO;
 	
 	@Autowired
-	ParkingSlotsService parkingSlotsService;
+	private ParkingSlotsService parkingSlotsService;
 	
 	@Autowired
-	ParkingAmountInfoService parkingAmountInfoService;
+	private ParkingAmountInfoService parkingAmountInfoService;
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.service.ParkedVehicleInfoService#saveParkedVehicleInfo
+	 */
 	@Override
 	public boolean saveParkedVehicleInfo(ParkedVehicleInfo parkedVehicleInfo) {
 		if(parkingSlotsService.getParkingSlotsInfo(parkedVehicleInfo.getParkingLotId()).getAvailableSlots()<1) {
@@ -41,11 +44,17 @@ public class ParkedVehicleInfoServiceImpl implements ParkedVehicleInfoService {
 		return parkedVehicleInfoDAO.saveParkedVehicleInfo(parkedVehicleInfo);
 	}
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.service.ParkedVehicleInfoService#getParkedVehicleInfo
+	 */
 	@Override
 	public ParkedVehicleInfo getParkedVehicleInfo(String vehicleNumber) {
 		return parkedVehicleInfoDAO.getParkedVehicleInfo(vehicleNumber);
 	}
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.service.ParkedVehicleInfoService#generateParkingBill
+	 */
 	@Override
 	public Double generateParkingBill(String vehicleNumber) {
 		Double parkingAmount = 0.0;
@@ -65,6 +74,9 @@ public class ParkedVehicleInfoServiceImpl implements ParkedVehicleInfoService {
 		return parkingAmount;
 	}
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.service.ParkedVehicleInfoService#getParkedVehicles
+	 */
 	@Override
 	public List<String> getParkedVehicles(String parkingLotId){
 		return parkedVehicleInfoDAO.getParkedVehicles(parkingLotId);

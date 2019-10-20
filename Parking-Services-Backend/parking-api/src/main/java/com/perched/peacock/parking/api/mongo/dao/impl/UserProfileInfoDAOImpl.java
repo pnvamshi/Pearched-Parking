@@ -24,11 +24,14 @@ import com.perched.peacock.parking.api.mongo.model.UserProfileInfo;
 public class UserProfileInfoDAOImpl implements UserProfileInfoDAO {
 
 	@Autowired
-	MongoTemplate mongoTemplate;
+	private MongoTemplate mongoTemplate;
 	
 	@Autowired
-	EncryptionService encryptionService;
+	private EncryptionService encryptionService;
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.dao.UserProfileInfoDAO#saveUserProfileInfo
+	 */
 	@Override
 	public boolean saveUserProfileInfo(UserProfileInfo userProfileInfo) {
 		Query query = new Query();
@@ -41,6 +44,9 @@ public class UserProfileInfoDAOImpl implements UserProfileInfoDAO {
 		return mongoTemplate.save(userProfileInfo)!=null;
 	}
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.dao.UserProfileInfoDAO#getUserProfileInfo
+	 */
 	@Override
 	public UserProfileInfo getUserProfileInfo(String userName) {
 		Query query = new Query();
@@ -48,6 +54,9 @@ public class UserProfileInfoDAOImpl implements UserProfileInfoDAO {
 		return mongoTemplate.findOne(query, UserProfileInfo.class);
 	}
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.dao.UserProfileInfoDAO#updateUserProfileInfo
+	 */
 	@Override
 	public boolean updateUserProfileInfo(UserProfileInfo userProfileInfo) {
 		Query query = new Query();
@@ -59,6 +68,9 @@ public class UserProfileInfoDAOImpl implements UserProfileInfoDAO {
 		return mongoTemplate.findAndModify(query, update, UserProfileInfo.class)!=null;
 	}
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.dao.UserProfileInfoDAO#updateUserProfilePassword
+	 */
 	@Override
 	public boolean updateUserProfilePassword(String userName, String password) {
 		Query query = new Query();
@@ -69,6 +81,9 @@ public class UserProfileInfoDAOImpl implements UserProfileInfoDAO {
 		return mongoTemplate.findAndModify(query, update, UserProfileInfo.class)!=null;
 	}
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.dao.UserProfileInfoDAO#getUserNames
+	 */
 	@Override
 	public List<String> getUserNames(String role) {
 		Query query = new Query();
@@ -76,6 +91,9 @@ public class UserProfileInfoDAOImpl implements UserProfileInfoDAO {
 		return mongoTemplate.findDistinct(query,"userName", UserProfileInfo.class, String.class);
 	}
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.dao.UserProfileInfoDAO#deleteUserProfile
+	 */
 	@Override
 	public boolean deleteUserProfile(String username) {
 		Query query = new Query();

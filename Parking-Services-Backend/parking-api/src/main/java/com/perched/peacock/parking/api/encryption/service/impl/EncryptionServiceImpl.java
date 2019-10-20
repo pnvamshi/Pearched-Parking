@@ -14,11 +14,17 @@ import com.perched.peacock.parking.api.encryption.service.EncryptionService;
 @Service
 public class EncryptionServiceImpl implements EncryptionService {
 
+	/**
+	 * @see com.perched.peacock.parking.api.encryption.service.EncryptionService#hashPassword
+	 */
 	@Override
 	public String hashPassword(String plainTextPassword) {
 		return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
 	}
 	
+	/**
+	 * @see com.perched.peacock.parking.api.encryption.service.EncryptionService#comparePassword
+	 */
 	@Override
 	public boolean comparePassword(String plainPassword, String hashedPassword) {
 		return (BCrypt.checkpw(plainPassword, hashedPassword));

@@ -26,8 +26,11 @@ import com.perched.peacock.parking.api.mongo.model.ParkedVehicleInfo;
 public class ParkedVehicleInfoDAOImpl implements ParkedVehicleInfoDAO {
 
 	@Autowired
-	MongoTemplate mongoTemplate;
+	private MongoTemplate mongoTemplate;
 
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.dao.ParkedVehicleInfoDAO#saveParkedVehicleInfo
+	 */
 	@Override
 	public boolean saveParkedVehicleInfo(ParkedVehicleInfo parkedVehicleInfo) {
 		Query query = new Query();
@@ -41,6 +44,9 @@ public class ParkedVehicleInfoDAOImpl implements ParkedVehicleInfoDAO {
 		return mongoTemplate.save(parkedVehicleInfo) != null;
 	}
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.dao.ParkedVehicleInfoDAO#getParkedVehicleInfo
+	 */
 	@Override
 	public ParkedVehicleInfo getParkedVehicleInfo(String vehicleNumber) {
 		String saneVehicleNumber = StringUtils.isEmpty(vehicleNumber) ? "" : vehicleNumber.replaceAll("\\s+", ""); 
@@ -49,6 +55,9 @@ public class ParkedVehicleInfoDAOImpl implements ParkedVehicleInfoDAO {
 		return mongoTemplate.findOne(query, ParkedVehicleInfo.class);
 	}
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.dao.ParkedVehicleInfoDAO#exitParking
+	 */
 	@Override
 	public boolean exitParking(String vehicleNumber, Double parkingFee) {
 		String formattedVehicleNumber = StringUtils.isEmpty(vehicleNumber) ? "" : vehicleNumber.replaceAll("\\s+", "");
@@ -61,6 +70,9 @@ public class ParkedVehicleInfoDAOImpl implements ParkedVehicleInfoDAO {
 		return mongoTemplate.findAndModify(query, update, ParkedVehicleInfo.class)!=null;
 	}
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.dao.ParkedVehicleInfoDAO#getParkedVehicles
+	 */
 	@Override
 	public List<String> getParkedVehicles(String parkingLotId){
 		Query query = new Query();

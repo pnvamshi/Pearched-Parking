@@ -19,8 +19,11 @@ import com.perched.peacock.parking.api.mongo.model.ParkingAmountInfo;
 public class ParkingAmountInfoDAOImpl implements ParkingAmountInfoDAO {
 
 	@Autowired
-	MongoTemplate mongoTemplate;
+	private MongoTemplate mongoTemplate;
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.dao.ParkingAmountInfoDAO#getParkingAmountInfo
+	 */
 	@Override
 	public ParkingAmountInfo getParkingAmountInfo(String parkingLotId) {
 		Query query = new Query();
@@ -28,6 +31,9 @@ public class ParkingAmountInfoDAOImpl implements ParkingAmountInfoDAO {
 		return mongoTemplate.findOne(query, ParkingAmountInfo.class);
 	}
 	
+	/**
+	 * @see com.perched.peacock.parking.api.mongo.dao.ParkingAmountInfoDAO#saveParkingAmountInfo
+	 */
 	@Override
 	public boolean saveParkingAmountInfo (ParkingAmountInfo parkingAmountInfo) {
 		return mongoTemplate.save(parkingAmountInfo)!=null;
