@@ -9,7 +9,7 @@ http://parkingsolutions-env.uxn4bztsdj.us-east-1.elasticbeanstalk.com/swagger-ui
 
 - Language: **Java**
 - Framework: **Spring-boot**
-- Database: **MongoBD**
+- Database: **MongoDB**
 
 ### Setup guide
 
