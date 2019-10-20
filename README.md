@@ -23,15 +23,15 @@ http://parkingsolutions-env.uxn4bztsdj.us-east-1.elasticbeanstalk.com/swagger-ui
 - Mongo: 3.6x
 
 To run type command in terminal :
-'''
+```
 java -jar parking-api-0.0.1-SNAPSHOT.jar
-'''
+```
 
 #### Running parking-ui with Node
 
 1. Get npm installed in your system
 
 To run type command in terminal :
-'''
+```
 To run java -jar parking-api-0.0.1-SNAPSHOT.jar
-'''
+```
