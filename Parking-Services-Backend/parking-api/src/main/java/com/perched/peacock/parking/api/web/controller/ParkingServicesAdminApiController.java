@@ -3,6 +3,8 @@ package com.perched.peacock.parking.api.web.controller;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -64,6 +66,30 @@ public class ParkingServicesAdminApiController {
 			response = userProfileInfoService.saveUserProfileInfo(userProfileInfo);
 		}catch(Exception e){
 			LOGGER.error("Exception occured while processing request : {} as {}", userProfileInfo.getUserName(), e);
+			throw new TechnicalException(e);
+		}
+		
+		return response;
+	}
+	
+	@ApiOperation(value = "Get User names", notes = "Return user names")
+	@RequestMapping(value = "get/user/names", method = {POST}, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Success", response = String.class),
+			@ApiResponse(code = 401, message = "Unauthorized"),
+			@ApiResponse(code = 403, message = "Forbidden"),
+			@ApiResponse(code = 404, message = "Not Found"),
+			@ApiResponse(code = 500, message = "Failure") })
+	public List<String> getUserNames(@Valid @RequestBody @ApiParam(value = "value", required = true) String role,@RequestHeader("Authorization") String authHeader) {
+		LOGGER.info("Saving record for request : {}", role);
+		List<String> response = null;
+		try {
+			if(!SharedConstants.ROLE_ADMIN.contains(tokenService.getRoleFromToken(authHeader))) {
+				throw new InsufficientRoleException("User does not have access");
+			}
+			response = userProfileInfoService.getUserNames(role);
+		}catch(Exception e){
+			LOGGER.error("Exception occured while processing request : {} as {}", role, e);
 			throw new TechnicalException(e);
 		}
 		
