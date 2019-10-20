@@ -3,7 +3,8 @@
 A RESTful service to serve as a backend
 
 ### Swagger URL
-http://parkingsolutions-env.uxn4bztsdj.us-east-1.elasticbeanstalk.com/swagger-ui.html#/
+[AWS] http://parkingsolutions-env.uxn4bztsdj.us-east-1.elasticbeanstalk.com/swagger-ui.html#/
+[DEV] http://localhost:5000/swagger-ui.html#/
 
 ### Technical Stack
 
