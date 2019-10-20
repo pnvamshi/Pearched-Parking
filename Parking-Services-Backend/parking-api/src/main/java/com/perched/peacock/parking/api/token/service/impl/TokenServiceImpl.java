@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.perched.peacock.parking.api.dto.LoginDetails;
 import com.perched.peacock.parking.api.encryption.service.EncryptionService;
+import com.perched.peacock.parking.api.exception.InvalidTokenException;
 import com.perched.peacock.parking.api.exception.UserDoesNotExistException;
 import com.perched.peacock.parking.api.mongo.model.UserProfileInfo;
 import com.perched.peacock.parking.api.mongo.service.UserProfileInfoService;
@@ -61,11 +62,12 @@ public class TokenServiceImpl implements TokenService {
 	@Override
 	public String getRoleFromToken(String token) {
 		try {
+			
 			Jws<Claims> jwsClaims = Jwts.parser().setSigningKey(key).parseClaimsJws(token);
 			return jwsClaims.getBody().getSubject();
 		} catch (JwtException e) {
-			LOGGER.error("Invalid token");
+			LOGGER.error("Invalid token : {}",token);
+			throw new InvalidTokenException(e);
 		}
-		return "INVALID";
 	}
 }

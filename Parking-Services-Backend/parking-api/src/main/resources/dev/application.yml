@@ -5,6 +5,7 @@ spring:
    data:
       mongodb:
          uri: mongodb+srv://user:example@parkingdb-iqc1m.mongodb.net/testDB?retryWrites=true&w=majority
+         #host: localhost
          #port: 27017
          #username: root
          #database: admin
