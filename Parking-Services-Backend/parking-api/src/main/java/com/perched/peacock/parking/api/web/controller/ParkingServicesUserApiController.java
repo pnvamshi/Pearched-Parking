@@ -51,7 +51,7 @@ public class ParkingServicesUserApiController {
 			@ApiResponse(code = 500, message = "Failure")
 	})
 	public List<ParkingRegionInfo>  getParkingRegions(@Valid @RequestBody @ApiParam(value = "value", required = true) String request) {
-		LOGGER.info("Saving record for request : {}", request);
+		LOGGER.info("Fetching record for request : {}", request);
 		List<ParkingRegionInfo> response = null;
 		try {
 			response = parkingSlotsService.getParkingRegions();
@@ -73,12 +73,11 @@ public class ParkingServicesUserApiController {
 			@ApiResponse(code = 500, message = "Failure")
 	})
 	public ParkingSlots  getParkingSlots(@Valid @RequestBody @ApiParam(value = "value", required = true) String parkingLotId) {
-		LOGGER.info("Saving record for request : {}", parkingLotId);
+		LOGGER.info("Fetching record for request : {}", parkingLotId);
 		ParkingSlots response = null;
 		try {
 			response = parkingSlotsService.getParkingSlotsInfo(parkingLotId);
 		}catch(Exception e){
-			
 			LOGGER.error("Exception occured while processing request : {} as {}", parkingLotId, e);
 			throw new TechnicalException(e);
 		}

@@ -4,11 +4,7 @@ server:
 spring:
    data:
       mongodb:
-         host: localhost
-         port: 27017
-         username: root
-         database: admin
-         password: example
+         uri: mongodb+srv://user:example@parkingdb-iqc1m.mongodb.net/testDB?retryWrites=true&w=majority
 
 swagger:
    enabled: true

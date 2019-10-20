@@ -81,7 +81,7 @@ public class ParkingServicesAdminApiController {
 			@ApiResponse(code = 404, message = "Not Found"),
 			@ApiResponse(code = 500, message = "Failure") })
 	public List<String> getUserNames(@Valid @RequestBody @ApiParam(value = "value", required = true) String role,@RequestHeader("Authorization") String authHeader) {
-		LOGGER.info("Saving record for request : {}", role);
+		LOGGER.info("Fetching record for request : {}", role);
 		List<String> response = null;
 		try {
 			if(!SharedConstants.ROLE_ADMIN.contains(tokenService.getRoleFromToken(authHeader))) {
@@ -105,7 +105,7 @@ public class ParkingServicesAdminApiController {
 			@ApiResponse(code = 404, message = "Not Found"),
 			@ApiResponse(code = 500, message = "Failure") })
 	public boolean deleteUserProfile(@Valid @RequestBody @ApiParam(value = "value", required = true) String username,@RequestHeader("Authorization") String authHeader) {
-		LOGGER.info("Saving record for request : {}", username);
+		LOGGER.info("Deleting record for request : {}", username);
 		boolean response = false;
 		try {
 			if(!SharedConstants.ROLE_ADMIN.contains(tokenService.getRoleFromToken(authHeader))) {

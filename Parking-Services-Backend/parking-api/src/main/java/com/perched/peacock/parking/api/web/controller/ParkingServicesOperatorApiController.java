@@ -57,7 +57,6 @@ public class ParkingServicesOperatorApiController {
 			@ApiResponse(code = 500, message = "Failure") })
 	public boolean saveParkedVehicleInfo(@Valid @RequestBody @ApiParam(value = "value", required = true) IncomingVehicleInfoRequest vehicleInfo, @RequestHeader("Authorization") String authHeader) {
 		LOGGER.info("Saving record for request : {}", vehicleInfo);
-		System.out.println(authHeader);
 		boolean response = false;
 		try {
 			if(!(SharedConstants.ROLE_ADMIN+SharedConstants.ROLE_OPERATOR).contains(tokenService.getRoleFromToken(authHeader))) {
@@ -82,7 +81,7 @@ public class ParkingServicesOperatorApiController {
 			@ApiResponse(code = 500, message = "Failure")
 	})
 	public ParkedVehicleInfo getParkedVehicleInfo(@Valid @RequestBody @ApiParam(value = "value", required = true) String vehicleNumber, @RequestHeader("Authorization") String authHeader) {
-		LOGGER.info("Saving record for request : {}", vehicleNumber);
+		LOGGER.info("Fetching record for request : {}", vehicleNumber);
 		ParkedVehicleInfo response = null;
 		try {
 			if(!(SharedConstants.ROLE_ADMIN+SharedConstants.ROLE_OPERATOR).contains(tokenService.getRoleFromToken(authHeader))) {
@@ -107,7 +106,7 @@ public class ParkingServicesOperatorApiController {
 			@ApiResponse(code = 500, message = "Failure")
 	})
 	public Long generateParkingBill(@Valid @RequestBody @ApiParam(value = "value", required = true) String vehicleNumber, @RequestHeader("Authorization") String authHeader) {
-		LOGGER.info("Saving record for request : {}", vehicleNumber);
+		LOGGER.info("Fetching record for request : {}", vehicleNumber);
 		Long response = null;
 		try {
 			if(!(SharedConstants.ROLE_ADMIN+SharedConstants.ROLE_OPERATOR).contains(tokenService.getRoleFromToken(authHeader))) {
