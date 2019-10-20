@@ -78,6 +78,7 @@ public class ParkingServicesUserApiController {
 		try {
 			response = parkingSlotsService.getParkingSlotsInfo(parkingLotId);
 		}catch(Exception e){
+			
 			LOGGER.error("Exception occured while processing request : {} as {}", parkingLotId, e);
 			throw new TechnicalException(e);
 		}

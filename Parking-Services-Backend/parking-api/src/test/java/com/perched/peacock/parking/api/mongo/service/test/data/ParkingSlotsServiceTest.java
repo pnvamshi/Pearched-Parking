@@ -1,14 +1,11 @@
 package com.perched.peacock.parking.api.mongo.service.test.data;
 
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.perched.peacock.parking.api.dto.ParkingRegionInfo;
 import com.perched.peacock.parking.api.mongo.model.ParkingSlots;
 import com.perched.peacock.parking.api.mongo.service.ParkingSlotsService;
 
@@ -36,8 +33,22 @@ public class ParkingSlotsServiceTest {
 	}
 	
 	@Test
-	public void testRegion() {
-		List <ParkingRegionInfo> pa = parkingSlotsService.getParkingRegions();
-		System.out.println(pa);
+	public void saveParkingSlots2() {
+		ParkingSlots parkingSlots = new ParkingSlots();
+		parkingSlots.setAvailableSlots(100);
+		parkingSlots.setParkingLotId("PS2");
+		parkingSlots.setParkingRegion("Forum Building");
+		parkingSlots.setTotalSlots(150);
+		parkingSlotsService.saveParkingSlots(parkingSlots );
+	}
+	
+	@Test
+	public void e() {
+		ParkingSlots parkingSlots = new ParkingSlots();
+		parkingSlots.setAvailableSlots(150);
+		parkingSlots.setParkingLotId("PS3");
+		parkingSlots.setParkingRegion("Gopalan Building");
+		parkingSlots.setTotalSlots(150);
+		parkingSlotsService.saveParkingSlots(parkingSlots );
 	}
 }

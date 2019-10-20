@@ -27,7 +27,7 @@ public class UserProfileInfoServiceImplTest {
 	public void saveUser1() {
 		UserProfileInfo userProfileInfo = new UserProfileInfo();
 		userProfileInfo.setUserName("pnvamshi");
-		userProfileInfo.setPassword("hello1");
+		userProfileInfo.setPassword("hello");
 		userProfileInfo.setRole(SharedConstants.ROLE_ADMIN);
 		userProfileInfoService.saveUserProfileInfo(userProfileInfo );
 	}

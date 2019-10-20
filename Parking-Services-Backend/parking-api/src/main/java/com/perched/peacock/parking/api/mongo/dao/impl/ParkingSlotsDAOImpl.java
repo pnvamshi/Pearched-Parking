@@ -54,4 +54,5 @@ public class ParkingSlotsDAOImpl implements ParkingSlotsDAO {
 	public boolean saveParkingSlots(ParkingSlots parkingSlots) {
 		return mongoTemplate.save(parkingSlots)!=null;
 	}
+	
 }
