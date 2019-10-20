@@ -4,6 +4,7 @@ target/
 log/
 work/
 bin/
+node_modules/
 
 ## Files Not To Be Tracked ##
 
