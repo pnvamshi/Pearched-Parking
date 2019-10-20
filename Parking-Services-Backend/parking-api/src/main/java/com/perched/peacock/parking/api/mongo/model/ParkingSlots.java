@@ -17,7 +17,7 @@ public class ParkingSlots {
 	
 	private long availableSlots;
 	
-	private String pakingLotId;
+	private String parkingLotId;
 
 	public String getParkingRegion() {
 		return parkingRegion;
@@ -43,12 +43,12 @@ public class ParkingSlots {
 		this.availableSlots = availableSlots;
 	}
 
-	public String getPakingLotId() {
-		return pakingLotId;
+	public String getParkingLotId() {
+		return parkingLotId;
 	}
 
-	public void setPakingLotId(String pakingLotId) {
-		this.pakingLotId = pakingLotId;
+	public void setParkingLotId(String parkingLotId) {
+		this.parkingLotId = parkingLotId;
 	}
 	
 }
