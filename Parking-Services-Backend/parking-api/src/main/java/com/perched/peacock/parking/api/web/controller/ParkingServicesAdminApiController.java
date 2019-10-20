@@ -95,4 +95,28 @@ public class ParkingServicesAdminApiController {
 		
 		return response;
 	}
+	
+	@ApiOperation(value = "Delete User Profile", notes = "Return true if delete success")
+	@RequestMapping(value = "delete/user/profile", method = {POST}, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Success", response = String.class),
+			@ApiResponse(code = 401, message = "Unauthorized"),
+			@ApiResponse(code = 403, message = "Forbidden"),
+			@ApiResponse(code = 404, message = "Not Found"),
+			@ApiResponse(code = 500, message = "Failure") })
+	public boolean deleteUserProfile(@Valid @RequestBody @ApiParam(value = "value", required = true) String username,@RequestHeader("Authorization") String authHeader) {
+		LOGGER.info("Saving record for request : {}", username);
+		boolean response = false;
+		try {
+			if(!SharedConstants.ROLE_ADMIN.contains(tokenService.getRoleFromToken(authHeader))) {
+				throw new InsufficientRoleException("User does not have access");
+			}
+			response = userProfileInfoService.deleteUserProfile(username);
+		}catch(Exception e){
+			LOGGER.error("Exception occured while processing request : {} as {}", username, e);
+			throw new TechnicalException(e);
+		}
+		
+		return response;
+	}
 }

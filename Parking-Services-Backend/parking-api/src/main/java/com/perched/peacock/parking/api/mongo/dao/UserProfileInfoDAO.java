@@ -48,4 +48,11 @@ public interface UserProfileInfoDAO {
 	 */
 	List<String> getUserNames(String role);
 
+	/**
+	 * 
+	 * @param username
+	 * @return
+	 */
+	boolean deleteUserProfile(String username);
+
 }

@@ -75,4 +75,12 @@ public class UserProfileInfoDAOImpl implements UserProfileInfoDAO {
 		query.addCriteria(Criteria.where("role").is(role));
 		return mongoTemplate.findDistinct("userName", UserProfileInfo.class, String.class);
 	}
+	
+	@Override
+	public boolean deleteUserProfile(String username) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("userName").is(username));
+		return mongoTemplate.findAndRemove(query, UserProfileInfo.class)!=null;
+	}
+	
 }

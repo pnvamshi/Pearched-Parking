@@ -46,4 +46,10 @@ public class UserProfileInfoServiceImpl implements UserProfileInfoService{
 		return userProfileInfoDAO.getUserNames(role);
 	}
 	
+	@Override
+	public boolean deleteUserProfile(String username) {
+		return userProfileInfoDAO.deleteUserProfile(username);
+	}
+	
+	
 }
