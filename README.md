@@ -1,6 +1,6 @@
 # Perched-Peacock-Parking
 
-A RESTful service to serve as a backend
+A RESTful service to serve as a backend and React App to serve as frontend
 
 ### Swagger URL
 - [AWS] http://parkingsolutions-env.uxn4bztsdj.us-east-1.elasticbeanstalk.com/swagger-ui.html#/
