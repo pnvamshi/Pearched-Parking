@@ -1,6 +1,6 @@
 # Perched-Peacock-Parking
 
-A RESTful service to serve as a backend to https://survey-panda-ui.herokuapp.com/ 
+A RESTful service to serve as a backend
 
 ### Swagger URL
 http://parkingsolutions-env.uxn4bztsdj.us-east-1.elasticbeanstalk.com/swagger-ui.html#/
